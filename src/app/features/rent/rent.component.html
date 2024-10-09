@@ -1,0 +1,10 @@
+<div>
+  <h3>Rent</h3>
+  <form [formGroup]="parentForm">
+    <app-reusable-form
+      [formFields]="formFields"
+      formControlName="reusableForm"
+      (formSubmit)="onFormSubmit($event)">
+    </app-reusable-form>
+  </form>
+</div>
