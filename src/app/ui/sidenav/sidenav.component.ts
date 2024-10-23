@@ -32,7 +32,7 @@ export class SidenavComponent {
     },
     { icon: 'bar_chart', label: 'Monitoring', route: '/monitoring' },
     { icon: 'settings', label: 'Settings', route: '/settings' },
-    { icon: 'login', label: 'SigIn', route: '/signIn' },
+    { icon: 'login', label: 'SigIn', route: '/sign-in' },
   ];
 
   constructor() {
