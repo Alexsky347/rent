@@ -1,0 +1,75 @@
+<aside
+  class="fixed left-0 top-0 z-40 h-screen transform transition-all duration-300"
+  [class.w-[70px]]="!isExpanded() && !isMobile()"
+  [class.w-64]="isExpanded() || isMobile()"
+  [class.translate-x-0]="isOpen()"
+  [class.-translate-x-full]="isMobile() && !isOpen()"
+  (mouseenter)="onMouseEnter()"
+  (mouseleave)="onMouseLeave()"
+>
+  <!-- Sidebar Container -->
+  <div class="h-full overflow-y-auto bg-indigo-800 px-3 py-4">
+    <!-- Logo Area -->
+    <div class="mb-5 flex items-center px-2.5">
+      @if (isExpanded() || isMobile()) {
+      <span class="text-xl font-semibold text-white">{{ appName() }}</span>
+      } @else {
+      <span class="text-xl font-semibold text-white"> </span>
+      }
+    </div>
+
+    <!-- Navigation Links -->
+    <ul class="space-y-2">
+      @for (item of navItems; track item.route) {
+      <li>
+        <a
+          [routerLink]="item.route"
+          routerLinkActive="bg-indigo-700"
+          class="flex items-center rounded-lg p-2 text-white hover:bg-indigo-700"
+          [class.justify-center]="!isExpanded() && !isMobile()"
+        >
+          <span
+            class="material-icons-outlined"
+            [class.mr-3]="isExpanded() || isMobile()"
+          >
+            {{ item.icon }}
+          </span>
+          @if (isExpanded() || isMobile()) {
+          <span>{{ item.label }}</span>
+          }
+        </a>
+      </li>
+      }
+    </ul>
+  </div>
+</aside>
+
+<!-- Overlay -->
+@if (isOpen() && isMobile()) {
+<div
+  class="fixed inset-0 z-30 bg-indigo-900 bg-opacity-50"
+  (click)="toggleSidebar()"
+></div>
+}
+
+<!-- Mobile Toggle Button -->
+<button
+  (click)="toggleSidebar()"
+  class="fixed left-4 top-4 z-50 rounded-lg bg-indigo-800 p-2 text-white hover:bg-indigo-700 lg:hidden"
+>
+  <span class="material-icons-outlined">
+    {{ isOpen() ? "close" : "menu" }}
+  </span>
+</button>
+
+<!-- Desktop Expand/Collapse Button -->
+@if (!isMobile()) {
+<button
+  (click)="toggleExpanded()"
+  class="fixed bottom-4 left-4 z-50 hidden rounded-lg bg-indigo-800 p-2 text-white hover:bg-indigo-700 lg:block"
+>
+  <span class="material-icons-outlined">
+    {{ isExpanded() ? "chevron_left" : "chevron_right" }}
+  </span>
+</button>
+}
