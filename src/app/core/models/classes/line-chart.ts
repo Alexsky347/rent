@@ -1,14 +1,14 @@
-import { MyChart } from './my-chart';
 import { EnumChart } from '../enums/enum-chart';
+import { MyChart } from './my-chart';
 import { ConfigChart } from '../types/config-chart';
 
-export class PieChart extends MyChart<'pie'> {
+export class LineChart extends MyChart<'line'> {
   constructor() {
     super();
   }
 
   override create(config: ConfigChart): void {
-    const  {data, labels, options} = config;
+    const { data, labels, options } = config;
     this.config = {
       data: {
         labels,

@@ -1,27 +1,62 @@
 import { Component } from '@angular/core';
-import { PieChart } from '../../core/models/classes/pie-chart';
 import { BarChart } from '../../core/models/classes/bar-chart';
 import { ChartComponent } from '../../ui/chart/chart.component';
-import { ItMyChart } from '../../core/models/interfaces/it-my-chart';
+import { ChartConfiguration } from 'chart.js';
+import { ConfigChart } from '../../core/models/types/config-chart';
+import { LineChart } from '../../core/models/classes/line-chart';
 
 @Component({
   selector: 'app-monitoring',
   standalone: true,
   imports: [ChartComponent],
   templateUrl: './monitoring.component.html',
-  styleUrl: './monitoring.component.scss'
+  styleUrl: './monitoring.component.scss',
 })
 export class MonitoringComponent {
-  pieChart: ItMyChart;
-  barChart: ItMyChart;
+  lineChart!: ChartConfiguration;
+  barChart!: ChartConfiguration;
+  horizontalBarChart!: ChartConfiguration;
+  barChartConfig: ConfigChart;
 
   constructor() {
-    const pieChart = new PieChart();
-    pieChart.create();
-    this.pieChart = pieChart.render();
-
+    const labels = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+    ];
+    this.barChartConfig = {
+      data: [65, 59, 80, 81, 56, 55, 40],
+      labels: labels,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    };
     const barChart = new BarChart();
-    barChart.create();
+    barChart.create(this.barChartConfig);
     this.barChart = barChart.render();
+
+    const horizontalBarChart = new BarChart();
+    horizontalBarChart.create({...this.barChartConfig, options: {indexAxis: 'y'}});
+    this.horizontalBarChart = horizontalBarChart.render();
+
+    const lineChart = new LineChart();
+    lineChart.create(this.barChartConfig);
+    this.lineChart = lineChart.render();
+  }
+  ngOnInit() {
+    //test on update chart
+    setTimeout(() => {
+      const lineChart = new LineChart();
+      lineChart.create(this.barChartConfig);
+      this.lineChart = lineChart.render();
+    }, 5000);
   }
 }
