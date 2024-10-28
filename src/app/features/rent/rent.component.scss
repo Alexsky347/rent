@@ -1,0 +1,15 @@
+h3 {
+  padding-bottom: 10px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.3s;
+
+  &:hover {
+    border-color: var(--primary-color-light);
+  }
+
+  &.active-tab {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+  }
+}

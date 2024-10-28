@@ -6,13 +6,15 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { ReusableFormComponent } from '../../ui/reusable-form/reusable-form.component';
+import { CommonModule } from '@angular/common';
+
 
 type CallBackFn = (formData: Record<string, number>) => void;
 type RentTab = 'gross' | 'net' | 'monthly';
 @Component({
   selector: 'app-rent',
   standalone: true,
-  imports: [ReusableFormComponent, ReactiveFormsModule],
+  imports: [CommonModule, ReusableFormComponent, ReactiveFormsModule],
   templateUrl: './rent.component.html',
   styleUrl: './rent.component.scss',
 })
@@ -22,7 +24,7 @@ export class RentComponent {
   grossProfitabilityFormFields = [
     {
       name: 'rent',
-      label: 'Loyer Mensuel',
+      label: 'Loyer mensuel',
       type: 'number',
       validators: [Validators.required],
     },
@@ -39,7 +41,7 @@ export class RentComponent {
   netProfitabilityFormFields = [
     {
       name: 'rent',
-      label: 'Loyer Mensuel',
+      label: 'Loyer mensuel',
       type: 'number',
       validators: [Validators.required],
     },
@@ -142,8 +144,8 @@ export class RentComponent {
     this.netProfitabilityResult = (annualRent / price) * 100;
   };
 
-  handleShowTab(tab: string) {
-    return this.showRentTab !== tab;
+  handleShowTab() {
+    return this.showRentTab;
   }
 
   showTab(tab: RentTab) {

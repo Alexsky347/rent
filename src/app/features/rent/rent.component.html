@@ -1,50 +1,65 @@
 <div>
-  <h1 class="text-center">Rent</h1>
-  <div class="flex gap-x-10 justify-center p-10">
-    <div>
-      <h3 (click)="showTab('gross')" class="pb-10 cursor-pointer">Rentabilité Brute</h3>
-      <form
-        [hidden]="handleShowTab('gross')"
-        [formGroup]="grossProfitabilityForm"
+  <h1 class="text-center mt-10">Rentabilité immobilière</h1>
+  <div class="flex gap-x-10 justify-center p-10 border-b-2">
+    <h3
+      (click)="showTab('gross')"
+      class="pb-2 cursor-pointer"
+      [ngClass]="{ 'active-tab': showRentTab === 'gross' }"
+    >
+      Rentabilité brute
+    </h3>
+    <h3
+      (click)="showTab('net')"
+      class="pb-2 cursor-pointer"
+      [ngClass]="{ 'active-tab': showRentTab === 'net' }"
+    >
+      Rentabilité nette
+    </h3>
+    <h3
+      (click)="showTab('monthly')"
+      class="pb-2 cursor-pointer"
+      [ngClass]="{ 'active-tab': showRentTab === 'monthly' }"
+    >
+      Rentabilité mensuelle
+    </h3>
+  </div>
+  <div class="flex justify-center mt-10">
+    @switch (handleShowTab()) { @case ('net') {
+    <form [formGroup]="netProfitabilityForm">
+      <app-reusable-form
+        [formFields]="netProfitabilityFormFields"
+        formControlName="reusableForm"
+        (formSubmit)="onFormSubmit($event, callBackComputeNetRent)"
       >
-        <app-reusable-form
-          [formFields]="grossProfitabilityFormFields"
-          formControlName="reusableForm"
-          (formSubmit)="onFormSubmit($event, callBackComputeGrossRent)"
-        >
-        </app-reusable-form>
-        @if(grossProfitabilityResult) {
-        <p>RIB: {{ grossProfitabilityResult }} %</p>
-        }
-      </form>
-    </div>
-    <div>
-      <h3 (click)="showTab('net')" class="pb-10 cursor-pointer">Rentabilité Nette</h3>
-      <form [hidden]="handleShowTab('net')" [formGroup]="netProfitabilityForm">
-        <app-reusable-form
-          [formFields]="netProfitabilityFormFields"
-          formControlName="reusableForm"
-          (formSubmit)="onFormSubmit($event, callBackComputeNetRent)"
-        >
-        </app-reusable-form>
-        @if(netProfitabilityResult) {
-        <p>RIN: {{ netProfitabilityResult }} %</p>
-        }
-      </form>
-    </div>
-    <div>
-      <h3 (click)="showTab('monthly')" class="pb-10 cursor-pointer">Rentabilité Mensuelle</h3>
-      <form [hidden]="handleShowTab('monthly')" [formGroup]="monthlyProfitForm">
-        <app-reusable-form
-          [formFields]="monthlyProfitFormFields"
-          formControlName="reusableForm"
-          (formSubmit)="onFormSubmit($event, callBackComputeMonthlyProfit)"
-        >
-        </app-reusable-form>
-        @if(monthlyProfitResult) {
-        <p>Bénéfices mensuels: {{ monthlyProfitResult }}</p>
-        }
-      </form>
-    </div>
+      </app-reusable-form>
+      @if(netProfitabilityResult) {
+      <p>RIN: {{ netProfitabilityResult }} %</p>
+      }
+    </form>
+    } @case ('monthly') {
+    <form [formGroup]="monthlyProfitForm">
+      <app-reusable-form
+        [formFields]="monthlyProfitFormFields"
+        formControlName="reusableForm"
+        (formSubmit)="onFormSubmit($event, callBackComputeMonthlyProfit)"
+      >
+      </app-reusable-form>
+      @if(monthlyProfitResult) {
+      <p>Bénéfices mensuels: {{ monthlyProfitResult }}</p>
+      }
+    </form>
+    }@default {
+    <form [formGroup]="grossProfitabilityForm">
+      <app-reusable-form
+        [formFields]="grossProfitabilityFormFields"
+        formControlName="reusableForm"
+        (formSubmit)="onFormSubmit($event, callBackComputeGrossRent)"
+      >
+      </app-reusable-form>
+      @if(grossProfitabilityResult) {
+      <p>RIB: {{ grossProfitabilityResult }} %</p>
+      }
+    </form>
+    } }
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -21,6 +21,7 @@ export class SidenavComponent {
   isOpen = signal(false);
   isExpanded = signal(false);
   isMobile = signal(window.innerWidth < 1024);
+  stateChanged = output<boolean>();
 
   navItems: NavItem[] = [
     { icon: 'home', label: 'Home', route: '/home' },
@@ -47,10 +48,12 @@ export class SidenavComponent {
 
   toggleSidebar(): void {
     this.isOpen.update((state) => !state);
+    this.stateChanged.emit(this.isOpen());
   }
 
   toggleExpanded(): void {
     this.isExpanded.update((state) => !state);
+    this.stateChanged.emit(this.isExpanded());
   }
 
   onMouseEnter(): void {
