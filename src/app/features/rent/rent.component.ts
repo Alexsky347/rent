@@ -8,7 +8,6 @@ import {
 import { ReusableFormComponent } from '../../ui/reusable-form/reusable-form.component';
 import { CommonModule } from '@angular/common';
 
-
 type CallBackFn = (formData: Record<string, number>) => void;
 type RentTab = 'gross' | 'net' | 'monthly';
 @Component({
@@ -20,6 +19,7 @@ type RentTab = 'gross' | 'net' | 'monthly';
 })
 export class RentComponent {
   showRentTab: RentTab = 'gross';
+  showBadge = false;
   grossProfitabilityForm!: FormGroup;
   grossProfitabilityFormFields = [
     {
@@ -152,8 +152,6 @@ export class RentComponent {
     this.showRentTab = tab;
   }
 
-
-
   callBackComputeMonthlyProfit = (formData: Record<string, number>) => {
     const {
       rent,
@@ -176,6 +174,6 @@ export class RentComponent {
     formData: Record<string, number>,
     callBack: CallBackFn
   ): void => {
-    callBack(formData);
+      callBack(formData);
   };
 }
